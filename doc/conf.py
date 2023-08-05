@@ -36,19 +36,13 @@ extensions = ['sphinx.ext.autodoc','myst_parser']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
-# The suffix(es) of source filenames.
-# You can specify multiple suffix as a list of string:
-#
-# source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
-
 # The master toctree document.
 master_doc = 'index'
 
 # General information about the project.
-project = 'WordCount'
-copyright = '2018, Harsha'
-author = 'Harsha'
+project = 'SanaDev'
+copyright = '2023, Sana'
+author = 'Sana Srikar'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -107,34 +101,6 @@ html_sidebars = {
         'searchbox.html',
     ]
 }
-
-
-# -- Options for HTMLHelp output ------------------------------------------
-
-# Output file base name for HTML help builder.
-htmlhelp_basename = 'WordCountdoc'
-
-
-# -- Options for LaTeX output ---------------------------------------------
-
-latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    #
-    # 'papersize': 'letterpaper',
-
-    # The font size ('10pt', '11pt' or '12pt').
-    #
-    # 'pointsize': '10pt',
-
-    # Additional stuff for the LaTeX preamble.
-    #
-    # 'preamble': '',
-
-    # Latex figure (float) alignment
-    #
-    # 'figure_align': 'htbp',
-}
-
 
 
 
