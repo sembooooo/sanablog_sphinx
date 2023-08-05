@@ -4,10 +4,10 @@
    table of contents
 
 
-Basics
-==========
+SanaDev Blog
+=============
 
 .. toctree::
    :maxdepth: 2
 
-   My_life_as_dev.md
+   my_life_as_dev.md
