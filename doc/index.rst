@@ -4,7 +4,7 @@
    table of contents
 
 
-SanaDev Blog
+JrDev Blog
 =============
 
 .. toctree::
