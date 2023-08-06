@@ -40,9 +40,9 @@ templates_path = ['_templates']
 master_doc = 'index'
 
 # General information about the project.
-project = 'SanaDev'
-copyright = '2023, Sana'
-author = 'Sana Srikar'
+project = 'A JrDev Blog'
+copyright = '2023, JrDev'
+author = 'JrDev'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
