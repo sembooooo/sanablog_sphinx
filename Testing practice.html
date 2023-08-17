@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>clean coding applied to Testing &mdash; A JrDev Blog 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="JrDev Blog" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            A JrDev Blog
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">clean coding applied to Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clean-coding">Clean coding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#brief-info-about-the-software-module">Brief info about the software module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#single-responsibility-principle">Single Responsibility principle</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bad-practice">Bad Practice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#good-practice">Good Practice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#benefits">Benefits</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-implementation-details">Using implementation details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#statemachine">Statemachine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-the-state-machine-in-a-single-function">Testing the state machine in a single function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-sub-functions">Testing sub functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#name-of-a-testcase">Name of a testcase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#duplication-in-testcode">Duplication in testcode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-write-stubs-when-you-have-the-code-at-hand">Why write stubs when you have the code at hand ?</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A JrDev Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">clean coding applied to Testing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Testing practice.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clean-coding-applied-to-testing">
+<h1>clean coding applied to Testing<a class="headerlink" href="#clean-coding-applied-to-testing" title="Permalink to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<p>People who are reading this are my motivation to write this article. I wanted to write
+one article like this for so long but i never was motivated and now i am . So boy! Lets go.
+Please feel free to critique my writing, dont hesitate to even abuse. Abuses with proper explanation are taken not only to the mind but to the heart.
+srikarsana1995&#64;gmail.com is my email id.</p>
+</section>
+<section id="clean-coding">
+<h2>Clean coding<a class="headerlink" href="#clean-coding" title="Permalink to this heading"></a></h2>
+<p>I have not encountered a Clean coding book which emphasized on testing. I only read two books but they only contain one chapter maximum dedicated to this subject. The biggest learning till now in my developement career is<br />
+<strong>“Your code is not clean until your testcases are clean”</strong>.</p>
+</section>
+<section id="brief-info-about-the-software-module">
+<h2>Brief info about the software module<a class="headerlink" href="#brief-info-about-the-software-module" title="Permalink to this heading"></a></h2>
+<p>The software module that is considered here is inspired from my previous experience. Lets call it power supply module for an <a class="reference internal" href="#!https://en.wikipedia.org/wiki/Electronic_control_unit"><span class="xref myst">Electronic Control Unit(ECU)</span></a>.
+This power supply module does few things</p>
+<ol class="arabic simple">
+<li><p>As soon as the ECU starts the software module should test the Supply paths hardware. There are different tests which are conducted on the paths to determine its health. For simplicity lets name Test_1 ,Test_2 and Test_3. Talk about bad naming 🤣 .</p></li>
+<li><p>There are multiple power supply connections to the ECU. After the supply paths startup tests are completed, this software module looks at the power supply voltages from different external sources and selects the best one based on the available voltage. So it will switch On the transistors/MOSFETs in the supply path in a fashion so that the ECU is completely supplied by that one specific external power supply.  We call this a switch over.</p></li>
+<li><p>After all the startup tests of the ECU are done then algorithm software is executed. At times Algorithm  also commands us , based on the usecase, to switch over to a different power supply source that is connected to the ECU.</p></li>
+<li><p>As this is an embedded system with an operating system , there are different processes which run at different frequencies like 10msec ,5msec ,25msec etc.,.</p></li>
+<li><p>There will be different components in an ECU and our ECU has different supply paths too. Meaning other hardware components are not always supplied by a single power supply source but the source changes after a switchover. Whenever a supply path is changed other software components that are dependent on the source voltage should also now look at a different source. To implement this logic the other module owner should now learn about Supply paths which is not efficient. So the supply paths itself will try to provide  few voltage interfaces( called wrapper voltage interface ) which hides the implementation details and only provides the voltage that each module is being supplied with.</p></li>
+</ol>
+</section>
+<section id="single-responsibility-principle">
+<h2>Single Responsibility principle<a class="headerlink" href="#single-responsibility-principle" title="Permalink to this heading"></a></h2>
+<section id="bad-practice">
+<h3>Bad Practice<a class="headerlink" href="#bad-practice" title="Permalink to this heading"></a></h3>
+<p>SRP is followed in the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder. Different files are created based on the functionality for example.</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_Test1.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_Test2.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_Test3.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_Scheduler.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_switchover.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_internalRequestor.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_ExternalRequestor.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_RequestPrioritization.c</span></code></p></li>
+</ol>
+<p>May be i have overmodularized it.  But the same is not followed in the unit testing. Developers tend to write 100’s of testcases in a single file. Lets say if Test_1.c unit testing has 200 testcases then all these 200 testcases are written in a single file as <code class="docutils literal notranslate"><span class="pre">UT_Supplypaths_Test1.c</span></code>.</p>
+</section>
+<section id="good-practice">
+<h3>Good Practice<a class="headerlink" href="#good-practice" title="Permalink to this heading"></a></h3>
+<p>Instead why not break this UT file by following SRP principle as follows</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PreconditionsFailureTests.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SwitchOFFTests.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SwitchOnTests.c</span></code></p></li>
+</ol>
+</section>
+<section id="benefits">
+<h3>Benefits<a class="headerlink" href="#benefits" title="Permalink to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>It will easier for your proxy or your successor to maintain the code</p></li>
+<li><p>It will easier for the reviewer to review as the tests are modularized. May be this helps in giving out small meaningful PRs.</p></li>
+<li><p>If you a mistake during your developement then the build log will let us know which part of the feature has bug as test cases from that specific file fails. Now the error log gives us more information without putting much work.</p></li>
+<li><p>Lets say this happens on jenkins it will also be easy for integrators or other people to understand as the log is containing extra information.</p></li>
+</ol>
+</section>
+</section>
+<section id="using-implementation-details">
+<h2>Using implementation details<a class="headerlink" href="#using-implementation-details" title="Permalink to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are different meanings for a unit , for now i am considering a c file as a unit.</p>
+</div>
+<p>Every unit has inputs and outputs. One should be able to invoke all the code written in the unit just by using inputs and outputs. I see benefits by not accessing the implementation details.</p>
+<section id="statemachine">
+<h3>Statemachine<a class="headerlink" href="#statemachine" title="Permalink to this heading"></a></h3>
+<p>There are few statemachines (which are implemented using a switch case statements) in this module.
+I see developers straight away setting all the global variables needed and the state variable for the state machine too so that the testcase directly lands at a particular state.
+Doing so is harmful as we might not calculate every value correctly every single time. So let the program calculate it for you. Lets say there are 10 states in the statemachine and one need to evaluate the procedure happening at stage 6th. One can run the statemachine process from first state to 6th state
+but instead developers chose to manipulate the global variables that control the statemachine.
+When asked why resort to such lazy implementation in testcases the developers answered me that they felt UT execution might be slowed down because of the for loop. I mean seriously on a 2.2GHz system how can one feel that looping 6 times can slow down UT execution?</p>
+<p>Consider the following testcase</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Testcase_State6</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Statemachine_t</span><span class="w"> </span><span class="o">*</span><span class="n">State</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_StateRef</span><span class="p">();</span><span class="w"> </span><span class="c1">// function only created to get state varaiable feference.</span>
+<span class="w">    </span><span class="n">TestControlData_t</span><span class="w"> </span><span class="o">*</span><span class="n">TestControlData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_TestControlDataRef</span><span class="p">();</span><span class="w">  </span><span class="c1">// function only created to get test control data reference.</span>
+<span class="w">    </span><span class="o">*</span><span class="n">State</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TestState_State6</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="n">TestControlData</span><span class="o">-&gt;</span><span class="n">FailureStage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TestStage_NotValid</span><span class="p">;</span>
+<span class="w">    </span><span class="n">TestControlData</span><span class="o">-&gt;</span><span class="n">FailureCounter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">statemachine</span><span class="p">();</span>
+<span class="w">    </span><span class="n">EvalEq</span><span class="p">(</span><span class="n">isPathSwitchOFF</span><span class="p">(),</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">Testcase_State7</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Statemachine_t</span><span class="w"> </span><span class="o">*</span><span class="n">State</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_StateRef</span><span class="p">();</span><span class="w"> </span><span class="c1">// function only created to get state varaiable feference.</span>
+<span class="w">    </span><span class="n">TestControlData_t</span><span class="w"> </span><span class="o">*</span><span class="n">TestControlData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_TestControlDataRef</span><span class="p">();</span><span class="w">  </span><span class="c1">// function only created to get test control data reference.</span>
+<span class="w">    </span><span class="o">*</span><span class="n">State</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TestState_State7</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="n">TestControlData</span><span class="o">-&gt;</span><span class="n">FailureStage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TestStage_state6</span><span class="p">;</span>
+<span class="w">    </span><span class="n">TestControlData</span><span class="o">-&gt;</span><span class="n">FailureCounter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="w">    </span><span class="n">statemachine</span><span class="p">();</span>
+<span class="w">    </span><span class="n">EvalEq</span><span class="p">(</span><span class="n">isFailureReported</span><span class="p">(),</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>vs</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Testcase_State6</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">setBatteryVoltage</span><span class="p">(</span><span class="mf">12.0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">_5msecCyle</span><span class="w"> </span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">_5msecCyle</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="n">_5msecCyle</span><span class="o">++</span><span class="p">){</span>
+<span class="w">    </span><span class="n">statemachine</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">EvalEq</span><span class="p">(</span><span class="n">isPathSwitchOFF</span><span class="p">(),</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">Testcase_State7</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// setup</span>
+<span class="w">    </span><span class="n">setBatteryVoltage</span><span class="p">(</span><span class="mf">12.0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">_5msecCyle</span><span class="w"> </span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">_5msecCyle</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="n">_5msecCyle</span><span class="o">++</span><span class="p">){</span>
+<span class="w">    </span><span class="n">statemachine</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">setBatteryVoltage</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Execute </span>
+<span class="w">    </span><span class="n">statemachine</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">// Evaluate </span>
+<span class="w">    </span><span class="n">EvalEq</span><span class="p">(</span><span class="n">isFailureReported</span><span class="p">(),</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Which one is more readable and understandable ?
+Benefits of not accessing implementation details</p>
+<ol class="arabic simple">
+<li><p>The testcase will be readable as there will be fewer lines of code. (mostly)</p></li>
+<li><p>No need to modify testcases if we change the design of src code.</p></li>
+<li><p>Less lines for the reviewer to go through.</p></li>
+<li><p>Easy to identify problems as the lines of code is less. It is hard to identify mistakes in code which has more lines.</p></li>
+<li><p>No need to write extra code just for testing.</p></li>
+</ol>
+</section>
+<section id="testing-the-state-machine-in-a-single-function">
+<h3>Testing the state machine in a single function<a class="headerlink" href="#testing-the-state-machine-in-a-single-function" title="Permalink to this heading"></a></h3>
+<p>I have come across testcases that are of 1000 lines in size. Few Devs have their whole statemachine in a single testcase.
+A testcase should one test one thing and only one thing.</p>
+</section>
+<section id="testing-sub-functions">
+<h3>Testing sub functions<a class="headerlink" href="#testing-sub-functions" title="Permalink to this heading"></a></h3>
+<p>lets assume the source code of <code class="docutils literal notranslate"><span class="pre">Supplypaths_switchover.c</span></code> as follows</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">RouteProperVoltageToWrapperInterfaces</span><span class="p">(</span><span class="n">RRequest_t</span><span class="w"> </span><span class="n">ReqeustedSupplyPath</span><span class="p">){</span>
+<span class="w">    </span><span class="cm">/*some lines of code */</span>
+<span class="p">}</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">PerformSwitchOverTo</span><span class="p">(</span><span class="n">Request_t</span><span class="w"> </span><span class="n">ReqeustedSupplyPath</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* some lines of code */</span>
+<span class="w">    </span><span class="cm">/*</span>
+<span class="cm">    Once we perform switchover </span>
+<span class="cm">    */</span>
+<span class="w">    </span><span class="n">RouteProperVoltageToWrapperInterfaces</span><span class="p">(</span><span class="n">ReqeustedSupplyPath</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Process_switchover</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">AreAllStartupTestsPassed</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Request_t</span><span class="w"> </span><span class="n">RequestedSupplyPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_PriorityRequest</span><span class="p">();</span>
+<span class="w">        </span><span class="n">PerformSwitchOverTo</span><span class="p">(</span><span class="n">RequestedSupplyPath</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">PerformSupplyPathShutdown</span><span class="p">();</span>
+<span class="w">        </span><span class="n">ReportFailureToSystem</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span><span class="w">    </span>
+<span class="w">    </span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>I have seen many people testing <code class="docutils literal notranslate"><span class="pre">RouteProperVoltageToWrapperInterfaces()</span></code> seperately. They write adapter/helper functions to invoke this static function alone but they never wrote the testcase using <code class="docutils literal notranslate"><span class="pre">Process_switchover()</span></code>. End of the day Code coverage is 100% .
+In such a testing even if we comment the line as shown below the testcases will still pass.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">RouteProperVoltageToWrapperInterfaces</span><span class="p">(</span><span class="n">RRequest_t</span><span class="w"> </span><span class="n">ReqeustedSupplyPath</span><span class="p">){</span>
+<span class="w">    </span><span class="cm">/*some lines of code */</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">PerformSwitchOverTo</span><span class="p">(</span><span class="n">Request_t</span><span class="w"> </span><span class="n">ReqeustedSupplyPath</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* some lines of code */</span>
+<span class="w">    </span><span class="cm">/*</span>
+<span class="cm">    Once we perform switchover </span>
+<span class="cm">    */</span>
+<span class="w">    </span><span class="c1">//RouteProperVoltageToWrapperInterfaces(ReqeustedSupplyPath);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Process_switchover</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">AreAllStartupTestsPassed</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Request_t</span><span class="w"> </span><span class="n">RequestedSupplyPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_PriorityRequest</span><span class="p">();</span>
+<span class="w">        </span><span class="n">PerformSwitchOverTo</span><span class="p">(</span><span class="n">RequestedSupplyPath</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">PerformSupplyPathShutdown</span><span class="p">();</span>
+<span class="w">        </span><span class="n">ReportFailureToSystem</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span><span class="w">    </span>
+<span class="w">    </span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now we have missed a defect that could have been detected if <code class="docutils literal notranslate"><span class="pre">Process_switchover()</span></code> was used in the testcase that Evaluates wrapper voltage interface values for different requests.
+Code coverage should be used a tool that helps us indicate the untested part of the code but one should not just rely on the code coverage tool alone to identify untested code part.
+Never test subfunctions instead test it as a whole.</p>
+</section>
+</section>
+<section id="name-of-a-testcase">
+<h2>Name of a testcase<a class="headerlink" href="#name-of-a-testcase" title="Permalink to this heading"></a></h2>
+<p>People instead of naming the testcase they write so many comments.
+I started using the naming convention from Roy Osherove book - The art of unit testing.
+Test cases are named better if we follow the format <code class="docutils literal notranslate"><span class="pre">[Given]_When_Then</span></code>.
+In my experience file name explains <code class="docutils literal notranslate"><span class="pre">Given</span></code> and it becomes redundant to again mention it in every test case. So in those cases i resort to using <code class="docutils literal notranslate"><span class="pre">when_then</span></code> style.</p>
+<p>Few examples of naming the testcases using the format which Roy explained are as follows</p>
+<p><code class="docutils literal notranslate"><span class="pre">SuccessfullStartupCompletion_AppSwCommandsStop_NoSwitchOverHappens()</span></code>
+<code class="docutils literal notranslate"><span class="pre">UnSuccessfullStartupCompletion_NoCommandFromAppSw_NoSwitchOverHappens()</span></code>
+<code class="docutils literal notranslate"><span class="pre">SuccessfullStartupCompletion_NoCommandFromAppSw_SwitchOverHappens()</span></code></p>
+<p>One thing which me and my reviwers experienced after following this style of naming was it was easy to identify missing testcases as this style helps us look the requirements from a different perspective. It was more like different combinations  of the words <code class="docutils literal notranslate"><span class="pre">SuccessfullStartupCompletion</span></code>, <code class="docutils literal notranslate"><span class="pre">AppSwCommands</span></code> and <code class="docutils literal notranslate"><span class="pre">witchOverHappening</span></code> .
+Good naming also helped me with TDD.</p>
+</section>
+<section id="duplication-in-testcode">
+<h2>Duplication in testcode<a class="headerlink" href="#duplication-in-testcode" title="Permalink to this heading"></a></h2>
+<p>People tend to ignore duplication in testcode. Eliminating duplication has a few good benefits.</p>
+<ol class="arabic simple">
+<li><p>Reviwer need not review the same code over and over again.</p></li>
+<li><p>It takes less of code develop</p></li>
+<li><p>All we have to do is change at one place and not every testcase.</p></li>
+</ol>
+<p>Here is one Example of the duplication i have seen</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Test1</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* some testcode */</span>
+<span class="w">    </span><span class="n">Eval</span><span class="p">(</span><span class="n">isFailureReportedToSystem</span><span class="p">());</span>
+<span class="w">    </span><span class="n">Eval</span><span class="p">(</span><span class="n">isSupplySwitchOverFailed</span><span class="p">());</span>
+<span class="w">    </span><span class="n">Eval</span><span class="p">(</span><span class="n">AreAllSupplyPathsSwitchedOFF</span><span class="p">());</span>
+<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">Test2</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* some testcode */</span>
+<span class="w">    </span><span class="n">Eval</span><span class="p">(</span><span class="n">isFailureReportedToSystem</span><span class="p">());</span>
+<span class="w">    </span><span class="n">Eval</span><span class="p">(</span><span class="n">isSupplySwitchOverFailed</span><span class="p">());</span>
+<span class="w">    </span><span class="n">Eval</span><span class="p">(</span><span class="n">AreAllSupplyPathsSwitchedOFF</span><span class="p">());</span>
+<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">Test3</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* some testcode */</span>
+<span class="w">    </span><span class="n">Eval</span><span class="p">(</span><span class="n">isFailureReportedToSystem</span><span class="p">());</span>
+<span class="w">    </span><span class="n">Eval</span><span class="p">(</span><span class="n">isSupplySwitchOverFailed</span><span class="p">());</span>
+<span class="w">    </span><span class="n">Eval</span><span class="p">(</span><span class="n">AreAllSupplyPathsSwitchedOFF</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here there is duplication in Evaluation part which can be reduced. Every test case has three parts. Setup , execute and Evaluate . In my short experience as developer and reviwer i have only noticed duplication at the first (setup ) and the last Evaluate part.</p>
+</section>
+<section id="why-write-stubs-when-you-have-the-code-at-hand">
+<h2>Why write stubs when you have the code at hand ?<a class="headerlink" href="#why-write-stubs-when-you-have-the-code-at-hand" title="Permalink to this heading"></a></h2>
+<p>This is also not my idea but i have picked it up from Roy’s book. Why should one always treat
+a single file as a unit.
+So in our case we have the following files</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_Test1.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_Test2.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_Test3.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_Scheduler.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_switchover.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_internalRequestor.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_ExternalRequestor.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Supplypaths_RequestPrioritization.c</span></code></p></li>
+</ol>
+<p>Every file takes inputs from other files in the module. Few files take a lot of inputs and few other files take a very few inputs and few dont.
+If we test every file seperately we have to write mocks/stubs for the interfaces that are internal to the component. Why cant we create a test environment which builds the whole module together. As it is only a few files , compilation time is not drastically increased.
+Developement is ofcourse less as we do not need to write stubs for internal interfaces.
+Reviewer has less code to review.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="JrDev Blog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, JrDev.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
