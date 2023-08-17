@@ -53,7 +53,7 @@ Instead why not break this UT file by following SRP principle as follows
 ```{note}
 There are different meanings for a unit , for now i am considering a c file as a unit.
 ```
-Every unit has inputs and outputs. One should be able to invoke all the code in the unit just by using inputs and outputs. I see benefits by not accessing them.
+Every unit has inputs and outputs. One should be able to invoke all the code in the unit just by using inputs and outputs. I see benefits by not accessing the implementation details.
 
 ### Statemachine 
 There are few statemachines (which are implemented using a switch case statements) in this module.
@@ -176,5 +176,57 @@ Few examples of naming the testcases are as follows
 `UnSuccessfullStartupCompletion_NoCommandFromAppSw_NoSwitchOverHappens()`
 `SuccessfullStartupCompletion_NoCommandFromAppSw_SwitchOverHappens()`
 
-One thing which me and my reviwers experienced after following this style of naming was it was easy to identify missing testcases as this style helps us look the requirements from a different perspective. It was more like different combinations  of `SuccessfullStartupCompletion`, `AppSwCommands` and `witchOverHappening` . It is easy to identify a missing combination.
+One thing which me and my reviwers experienced after following this style of naming was it was easy to identify missing testcases as this style helps us look the requirements from a different perspective. It was more like different combinations  of the words `SuccessfullStartupCompletion`, `AppSwCommands` and `witchOverHappening` . We felt easy to identify a missing combination.
 
+## Duplication in testcode
+People tend to ignore duplication in testcode. Eliminating duplication has a few good benefits.
+1. Reviwer need not review the same code over and over again.
+1. It takes less of code develop
+1. All we have to do is change at one place and not every testcase.
+
+Here is one Example of the duplication i have seen
+
+```c
+void Test1(void)
+{
+    /* some testcode */
+    Eval(isFailureReportedToSystem());
+    Eval(isSupplySwitchOverFailed());
+    Eval(AreAllSupplyPathsSwitchedOFF());
+}
+void Test2(void)
+{
+    /* some testcode */
+    Eval(isFailureReportedToSystem());
+    Eval(isSupplySwitchOverFailed());
+    Eval(AreAllSupplyPathsSwitchedOFF());
+}
+void Test3(void)
+{
+    /* some testcode */
+    Eval(isFailureReportedToSystem());
+    Eval(isSupplySwitchOverFailed());
+    Eval(AreAllSupplyPathsSwitchedOFF());
+}
+```
+
+Here there is duplication in Evaluation part which can be reduced. Every test case has three parts. Setup , execute and Evaluate . In my short experience as developer adn reviwer i have only noticed duplication at the first (setup ) and the last Evaluate part.
+
+## Why write stubs when you have the code at hand ?
+
+This is also not my idea but i have picked it up from Roy's book. Why should one always treat 
+a single file as a unit.
+So in our case we have the following files
+1. `Supplypaths_Test1.c`
+1. `Supplypaths_Test2.c`
+1. `Supplypaths_Test3.c`
+1. `Supplypaths_Scheduler.c`
+1. `Supplypaths_switchover.c`
+1. `Supplypaths_internalRequestor.c`
+1. `Supplypaths_ExternalRequestor.c`
+1. `Supplypaths_RequestPrioritization.c`
+
+Every file takes inputs from other files in the module. Few files take a lot of inputs and few other files take a very few inputs and few dont.
+If we test every file seperately we have to write mocks/stubs for the interfaces that are internal to the component. Why cant we create a test environment which builds the whole module together. As it is only a few files , compilation time is not drastically increased.
+Developement is ofcourse less as we do not need to write stubs for internal interfaces. 
+Reviewer has less code to review.
